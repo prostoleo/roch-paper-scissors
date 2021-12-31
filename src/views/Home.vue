@@ -1,8 +1,15 @@
 <template>
-	<div>Home</div>
+	<div class="home-layout">
+		<GesturesWrapper></GesturesWrapper>
+		<div class="controls-group">
+			<button>rules</button>
+		</div>
+	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	import GesturesWrapper from '../components/gestures/GesturesWrapper.vue';
+</script>
 
 <script>
 	export default {
@@ -10,4 +17,12 @@
 	};
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+	.home-layout {
+		height: 100%;
+
+		display: grid;
+		// place-content: center;
+		align-content: center;
+	}
+</style>

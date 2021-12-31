@@ -1,0 +1,37 @@
+$breakpoints: (
+	sm: 450px,
+	med: 650px,
+	med-lg: 768px,
+	lg: 900px,
+	xlg: 1200px,
+	xxlg: 1800px,
+);
+
+$maw-container: 1376px;
+$max-width: 1376;
+$min-width: 320;
+
+@mixin mq($key) {
+	$size: map-get($breakpoints, $key);
+
+	@media only screen and (min-width: $size) {
+		@content;
+	}
+}
+
+@mixin adaptive-value-min-max($property, $mobSize, $pcSize) {
+	$addSize: $pcSize - $mobSize;
+	$maxWidth: $max-width - 320;
+
+	@media (min-width: #{$max-width}px) {
+		#{$property}: #{$pcSize}px;
+	}
+
+	@media (max-width: #{$min-width}px) {
+		#{$property}: #{$mobSize}px;
+	}
+
+	#{$property}: calc(
+		#{$mobSize}px + #{$addSize} * ((100vw - 320px) / #{($maxWidth)})
+	);
+}

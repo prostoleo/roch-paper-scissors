@@ -35,8 +35,8 @@
 		height: 100%;
 		margin: auto;
 
-		display: grid;
-		place-content: center;
+		.__router-view__ {
+		}
 	}
 	/* #app {
 		position: static;
