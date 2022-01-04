@@ -35,6 +35,8 @@ export default function useMainStore() {
 		return 'draw';
 	});
 
+	const gameStats = computed(() => mainStore.getGameStats);
+
 	const resetState = () => mainStore.$reset();
 
 	return {
@@ -45,5 +47,6 @@ export default function useMainStore() {
 		simpleGameOptions,
 		resultGame,
 		resetState,
+		gameStats,
 	};
 }

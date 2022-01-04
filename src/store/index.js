@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, reactive, toRef } from 'vue';
+import { ref, reactive, toRef, toRefs } from 'vue';
 
 import getRandomIntegerBetween from '@/helpers/randomIntegerBetween.js';
 // console.log('getRandomIntegerBetween: ', getRandomIntegerBetween);
@@ -30,6 +30,14 @@ export const useStore = defineStore('simpleGame', {
 				isPlayerWon: false,
 				isHouseWon: false,
 			},
+
+			gameStats: JSON.parse(
+				localStorage.getItem('rock-paper-scissors-simple-GameStats')
+			) ?? {
+				won: 0,
+				draw: 0,
+				lost: 0,
+			},
 		};
 	},
 
@@ -48,6 +56,15 @@ export const useStore = defineStore('simpleGame', {
 
 		getGameState(state) {
 			return state.gameState;
+		},
+
+		getGameStats(state) {
+			localStorage.setItem(
+				'rock-paper-scissors-simple-GameStats',
+				JSON.stringify(state.gameStats)
+			);
+
+			return state.gameStats;
 		},
 
 		getSimpleGameOptionOnId: (state) => {
@@ -84,44 +101,62 @@ export const useStore = defineStore('simpleGame', {
 
 			if (playerOption === houseOption) {
 				this.gameState.isGameFinished = true;
+				this.addDraw();
 				return;
 			}
 			if (playerOption === 'rock' && houseOption === 'paper') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = false;
 				this.gameState.isHouseWon = true;
+				this.addLost();
 				return;
 			}
 			if (playerOption === 'rock' && houseOption === 'scissors') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = true;
 				this.gameState.isHouseWon = false;
+				this.addWin();
 				return;
 			}
 			if (playerOption === 'paper' && houseOption === 'rock') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = true;
 				this.gameState.isHouseWon = false;
+				this.addWin();
 				return;
 			}
 			if (playerOption === 'paper' && houseOption === 'scissors') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = false;
 				this.gameState.isHouseWon = true;
+				this.addLost();
 				return;
 			}
 			if (playerOption === 'scissors' && houseOption === 'paper') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = true;
 				this.gameState.isHouseWon = false;
+				this.addWin();
 				return;
 			}
 			if (playerOption === 'scissors' && houseOption === 'rock') {
 				this.gameState.isGameFinished = true;
 				this.gameState.isPlayerWon = false;
 				this.gameState.isHouseWon = true;
+
+				this.addLost();
 				return;
 			}
+		},
+
+		addWin() {
+			this.gameStats.won += 1;
+		},
+		addDraw() {
+			this.gameStats.draw += 1;
+		},
+		addLost() {
+			this.gameStats.lost += 1;
 		},
 	},
 });

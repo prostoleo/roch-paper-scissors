@@ -4,13 +4,24 @@
 			<h1>rock paper scissors</h1>
 			<button>
 				<span class="subtitle">score</span>
-				<span class="score">11</span>
+				<span class="score">
+					{{ totalCount }}
+				</span>
 			</button>
 		</header>
 	</BaseContainer>
 </template>
 
-<script setup></script>
+<script setup>
+	import useMainStore from '@/composables/useMainStore';
+	import { computed } from 'vue';
+
+	const { gameStats } = useMainStore();
+	console.log('gameStats: ', gameStats);
+
+	const totalCount = computed(() => gameStats.value.won - gameStats.value.lost);
+	console.log('totalCount: ', totalCount);
+</script>
 
 <style lang="scss" scoped>
 	.container {
