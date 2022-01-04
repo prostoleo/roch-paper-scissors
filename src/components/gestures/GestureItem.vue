@@ -1,5 +1,5 @@
 <template>
-	<li
+	<div
 		class="gestures__item gesture"
 		:class="data.name"
 		@click="setCurrentOption(data.id)"
@@ -9,7 +9,7 @@
 				<img :src="`/img/icon-${data.name}.svg`" alt="" />
 			</div>
 		</div>
-	</li>
+	</div>
 </template>
 
 <script setup>
@@ -44,8 +44,6 @@
 		max-width: var(--width);
 		border-radius: 50%;
 
-		cursor: pointer;
-
 		&.rock {
 			background: $rock-gradient;
 		}
@@ -56,14 +54,18 @@
 			background: $scissors-gradient;
 		}
 
-		&:last-of-type {
-			grid-column: span 2;
-			// background: cyan;
+		&.initial {
+			cursor: pointer;
 
-			width: 50%;
-			margin: 0 auto;
+			&:last-of-type {
+				grid-column: span 2;
+				// background: cyan;
 
-			align-self: center;
+				width: 50%;
+				margin: 0 auto;
+
+				align-self: center;
+			}
 		}
 
 		&--measures {
