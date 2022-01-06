@@ -29,11 +29,11 @@
 	}
 
 	header {
-		position: absolute;
-		top: 2rem;
-		width: 100%;
-		left: 0;
-		right: 0;
+		// position: absolute;
+		// top: 2rem;
+		// width: 100%;
+		// left: 0;
+		// right: 0;
 
 		display: flex;
 		align-items: center;
@@ -70,11 +70,11 @@
 			}
 
 			span.score {
-				color: $dark-text;
-
-				font-size: 1.8rem;
+				font-size: 2.4rem;
 				font-weight: 700;
 				text-transform: uppercase;
+
+				color: $dark-text;
 			}
 		}
 	}

@@ -1,14 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from '@/views/Home.vue';
-import BigBangTheory from '@/views/BigBangTheory.vue';
+const BigBangTheory = () => import('../views/BigBangTheory.vue');
 
 const routes = [
-	/* {
-    path: '/',
-    redirect: '/groups',
-    meta: { requiresAuth: true }
-  }, */
 	{
 		path: '/',
 		name: 'Home',
@@ -19,16 +14,6 @@ const routes = [
 		name: 'BigBangTheory',
 		component: BigBangTheory,
 	},
-	// {
-	//   path: '/technology',
-	//   name: 'Technology',
-	//   component: Technology,
-	// },
-	// {
-	//   path: '/destination',
-	//   name: 'Destination',
-	//   component: Destination,
-	// },
 ];
 
 const router = createRouter({

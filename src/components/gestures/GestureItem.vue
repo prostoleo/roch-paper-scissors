@@ -2,7 +2,7 @@
 	<div
 		class="gestures__item gesture"
 		:class="data.name"
-		@click="setCurrentOption(data.id)"
+		@click="initial && setCurrentOption(data.id)"
 	>
 		<div class="gesture--measures">
 			<div class="gesture__img">
@@ -21,6 +21,11 @@
 		data: {
 			type: String,
 			required: true,
+		},
+		initial: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	});
 
@@ -65,6 +70,49 @@
 				margin: 0 auto;
 
 				align-self: center;
+			}
+		}
+
+		&.winner {
+			position: relative;
+			// z-index: 100;
+
+			&::after,
+			&::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: 50%;
+
+				background: white;
+			}
+
+			&::before {
+				opacity: 0.1;
+				z-index: -1;
+
+				transform: scale(1.55);
+			}
+			&::after {
+				opacity: 0.05;
+				z-index: -1;
+				transform: scale(2.05);
+			}
+
+			.gesture--measures {
+				position: relative;
+
+				&::after {
+					content: '';
+					position: absolute;
+					inset: 0;
+
+					background: white;
+					opacity: 0.025;
+					border-radius: 50%;
+					transform: scale(2.45);
+					z-index: -1;
+				}
 			}
 		}
 

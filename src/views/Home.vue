@@ -1,14 +1,11 @@
 <template>
 	<div class="home-layout">
 		<GesturesWrapper></GesturesWrapper>
-		<div class="controls-group">
-			<button>rules</button>
-		</div>
 	</div>
 </template>
 
 <script setup>
-	import GesturesWrapper from '../components/gestures/GesturesWrapper.vue';
+	import GesturesWrapper from '@/components/gestures/GesturesWrapper.vue';
 </script>
 
 <script>

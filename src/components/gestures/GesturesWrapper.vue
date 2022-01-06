@@ -6,6 +6,7 @@
 				v-for="option in simpleGameOptions"
 				:key="option.id"
 				:data="option"
+				initial
 			/>
 		</ul>
 
@@ -16,6 +17,7 @@
 						:key="getCurrentOption?.id"
 						:data="getCurrentOption"
 						class="result__item"
+						:class="resultGame === 'you won' ? 'winner' : ''"
 					/>
 					<h3 class="result__subtitle">you picked</h3>
 				</div>
@@ -24,6 +26,7 @@
 						:key="getHouseOption?.id"
 						:data="getHouseOption"
 						class="result__item"
+						:class="resultGame === 'you lost' ? 'winner' : ''"
 					/>
 					<h3 class="result__subtitle">the house picked</h3>
 				</div>
@@ -32,7 +35,7 @@
 				<h2 class="info__title">
 					{{ resultGame }}
 				</h2>
-				<button class="btn info__play-again" @click="resetState">
+				<button class="btn info__play-again" @click.stop="resetState">
 					Play again
 				</button>
 			</div>
@@ -64,7 +67,8 @@
 		width: 100%;
 		height: 100%;
 		margin: 0 auto;
-		margin-top: 8rem;
+		// margin-top: 8rem;
+		margin-top: 3rem;
 	}
 
 	.gestures {
@@ -109,6 +113,10 @@
 
 		align-items: center;
 
+		/* display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr auto; */
+
 		// .result__items
 
 		&__items {
@@ -132,6 +140,21 @@
 			flex-direction: column;
 			align-items: center;
 			gap: 2rem;
+
+			.result__item {
+				/* box-shadow: 1.5em 1.5em 3.5em rgba(255, 255, 255, 0.2),
+					3.1em 3.1em 5.75em rgba(255, 255, 255, 0.1),
+					5.15em 5.15em 9em rgba(255, 255, 255, 0.05),
+					-1.5em -1.5em 3.5em rgba(255, 255, 255, 0.2),
+					-3.1em -3.1em 5.75em rgba(255, 255, 255, 0.1),
+					-5.15em -5.15em 9em rgba(255, 255, 255, 0.05),
+					-1.5em 1.5em 3.5em rgba(255, 255, 255, 0.2),
+					-3.1em 3.1em 5.75em rgba(255, 255, 255, 0.1),
+					-5.15em 5.15em 9em rgba(255, 255, 255, 0.05),
+					1.5em -1.5em 3.5em rgba(255, 255, 255, 0.2),
+					3.1em -3.1em 5.75em rgba(255, 255, 255, 0.1),
+					5.15em -5.15em 9em rgba(255, 255, 255, 0); */
+			}
 		}
 
 		// .result__subtitle
@@ -160,6 +183,8 @@
 	.info {
 		width: max-content;
 		margin: 0 auto;
+
+		grid-column: span 2;
 
 		display: flex;
 		flex-direction: column;
