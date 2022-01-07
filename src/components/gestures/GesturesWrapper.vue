@@ -17,21 +17,29 @@
 						:key="getCurrentOption?.id"
 						:data="getCurrentOption"
 						class="result__item"
-						:class="resultGame === 'you won' ? 'winner' : ''"
+						ref="resultItemPlayerEl"
+						:class="{ winner: isPlayerWonComp }"
 					/>
 					<h3 class="result__subtitle">you picked</h3>
 				</div>
 				<div class="result__house">
+					<div
+						class="result__item--placeholder"
+						v-if="getShowPlaceholder"
+					></div>
 					<GestureItem
+						v-else
 						:key="getHouseOption?.id"
 						:data="getHouseOption"
 						class="result__item"
-						:class="resultGame === 'you lost' ? 'winner' : ''"
+						ref="resultItemHouseEl"
+						:class="{ winner: isHouseWonComp }"
 					/>
+					<!-- :class="{ winner: addHouseWinner }" -->
 					<h3 class="result__subtitle">the house picked</h3>
 				</div>
 			</div>
-			<div class="result__info info">
+			<div class="result__info info" v-if="!getShowPlaceholder">
 				<h2 class="info__title">
 					{{ resultGame }}
 				</h2>
@@ -47,17 +55,34 @@
 	import GestureItem from './GestureItem.vue';
 
 	import useMainStore from '@/composables/useMainStore.js';
-	import { computed } from 'vue';
+	import { computed, ref, toRefs, watch } from 'vue';
 
 	const {
 		mainStore,
 		getCurrentOption,
 		getHouseOption,
+		getShowPlaceholder,
 		// getGameState,
 		resultGame,
 		simpleGameOptions,
 		resetState,
 	} = useMainStore();
+
+	watch(getCurrentOption, (newVal, oldVal) => {
+		// console.log('oldVal: ', oldVal);
+		// console.log('newVal: ', newVal);
+		// console.log('mainStore: ', mainStore);
+		if (newVal !== null && newVal !== undefined && newVal !== oldVal) {
+			setTimeout(() => {
+				// showPlaceholder.value = false;
+				mainStore.setShowPlaceholder(false);
+			}, mainStore.getTimeoutMs);
+			// mainStore.setShowPlaceholder(false);
+		}
+	});
+
+	const isPlayerWonComp = computed(() => mainStore.getGameState.isPlayerWon);
+	const isHouseWonComp = computed(() => mainStore.getGameState.isHouseWon);
 
 	// console.log('getCurrentOption: ', getCurrentOption);
 </script>
@@ -76,9 +101,6 @@
 
 		max-width: var(--max-width);
 		margin: 0 auto;
-		// width: 100%;
-		// height: 100%;
-		// background: red;
 
 		background: url(/img/bg-triangle.svg);
 		background-repeat: no-repeat;
@@ -86,8 +108,10 @@
 		background-position: center center;
 
 		@include mq(med) {
-			--max-width: 40rem;
-			background-size: 55%;
+			--max-width: 50rem;
+			max-width: var(--max-width);
+			background-size: 50%;
+			background-position: 50% 70%;
 		}
 
 		&--simple-game {
@@ -129,6 +153,15 @@
 
 		// .result__item
 		&__item {
+			&--placeholder {
+				max-width: 13.5rem;
+				max-height: 13.5rem;
+				width: 100%;
+				height: 13.5rem;
+
+				border-radius: 50%;
+				background: #000;
+			}
 		}
 
 		// .result__player
@@ -142,18 +175,6 @@
 			gap: 2rem;
 
 			.result__item {
-				/* box-shadow: 1.5em 1.5em 3.5em rgba(255, 255, 255, 0.2),
-					3.1em 3.1em 5.75em rgba(255, 255, 255, 0.1),
-					5.15em 5.15em 9em rgba(255, 255, 255, 0.05),
-					-1.5em -1.5em 3.5em rgba(255, 255, 255, 0.2),
-					-3.1em -3.1em 5.75em rgba(255, 255, 255, 0.1),
-					-5.15em -5.15em 9em rgba(255, 255, 255, 0.05),
-					-1.5em 1.5em 3.5em rgba(255, 255, 255, 0.2),
-					-3.1em 3.1em 5.75em rgba(255, 255, 255, 0.1),
-					-5.15em 5.15em 9em rgba(255, 255, 255, 0.05),
-					1.5em -1.5em 3.5em rgba(255, 255, 255, 0.2),
-					3.1em -3.1em 5.75em rgba(255, 255, 255, 0.1),
-					5.15em -5.15em 9em rgba(255, 255, 255, 0); */
 			}
 		}
 

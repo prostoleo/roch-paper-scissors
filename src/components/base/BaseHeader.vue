@@ -17,10 +17,10 @@
 	import { computed } from 'vue';
 
 	const { gameStats } = useMainStore();
-	console.log('gameStats: ', gameStats);
+	// console.log('gameStats: ', gameStats);
 
 	const totalCount = computed(() => gameStats.value.won - gameStats.value.lost);
-	console.log('totalCount: ', totalCount);
+	// console.log('totalCount: ', totalCount);
 </script>
 
 <style lang="scss" scoped>
@@ -53,6 +53,7 @@
 		button {
 			display: inline-flex;
 			flex-direction: column;
+			align-items: center;
 
 			gap: 0.5rem;
 

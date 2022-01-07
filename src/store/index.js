@@ -31,6 +31,10 @@ export const useStore = defineStore('simpleGame', {
 				isHouseWon: false,
 			},
 
+			timeoutMs: 550,
+
+			showPlaceholder: true,
+
 			gameStats: JSON.parse(
 				localStorage.getItem('rock-paper-scissors-simple-GameStats')
 			) ?? {
@@ -58,6 +62,14 @@ export const useStore = defineStore('simpleGame', {
 			return state.gameState;
 		},
 
+		getShowPlaceholder(state) {
+			return state.showPlaceholder;
+		},
+
+		getTimeoutMs(state) {
+			return state.timeoutMs;
+		},
+
 		getGameStats(state) {
 			localStorage.setItem(
 				'rock-paper-scissors-simple-GameStats',
@@ -82,6 +94,10 @@ export const useStore = defineStore('simpleGame', {
 			this.setHouseOption();
 		},
 
+		setShowPlaceholder(val) {
+			this.showPlaceholder = val;
+		},
+
 		setHouseOption() {
 			const houseOptionId = getRandomIntegerBetween(1, 3);
 			// console.log('houseOptionId: ', houseOptionId);
@@ -100,51 +116,65 @@ export const useStore = defineStore('simpleGame', {
 			// console.log({ playerOption, houseOption });
 
 			if (playerOption === houseOption) {
-				this.gameState.isGameFinished = true;
-				this.addDraw();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.addDraw();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'rock' && houseOption === 'paper') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = false;
-				this.gameState.isHouseWon = true;
-				this.addLost();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = false;
+					this.gameState.isHouseWon = true;
+					this.addLost();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'rock' && houseOption === 'scissors') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = true;
-				this.gameState.isHouseWon = false;
-				this.addWin();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = true;
+					this.gameState.isHouseWon = false;
+					this.addWin();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'paper' && houseOption === 'rock') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = true;
-				this.gameState.isHouseWon = false;
-				this.addWin();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = true;
+					this.gameState.isHouseWon = false;
+					this.addWin();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'paper' && houseOption === 'scissors') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = false;
-				this.gameState.isHouseWon = true;
-				this.addLost();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = false;
+					this.gameState.isHouseWon = true;
+					this.addLost();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'scissors' && houseOption === 'paper') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = true;
-				this.gameState.isHouseWon = false;
-				this.addWin();
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = true;
+					this.gameState.isHouseWon = false;
+					this.addWin();
+				}, this.getTimeoutMs);
 				return;
 			}
 			if (playerOption === 'scissors' && houseOption === 'rock') {
-				this.gameState.isGameFinished = true;
-				this.gameState.isPlayerWon = false;
-				this.gameState.isHouseWon = true;
+				setTimeout(() => {
+					this.gameState.isGameFinished = true;
+					this.gameState.isPlayerWon = false;
+					this.gameState.isHouseWon = true;
 
-				this.addLost();
+					this.addLost();
+				}, this.getTimeoutMs);
 				return;
 			}
 		},

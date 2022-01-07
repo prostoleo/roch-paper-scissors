@@ -46,7 +46,7 @@
 	});
 
 	const route = useRoute();
-	console.log('route: ', route);
+	// console.log('route: ', route);
 
 	const imgPath = computed(() => {
 		if (route.name === 'BigBangTheory') {

@@ -3,7 +3,7 @@ import { useStore } from '@/store/index.js';
 
 export default function useMainStore() {
 	const mainStore = useStore();
-	console.log('mainStore: ', mainStore);
+	// console.log('mainStore: ', mainStore);
 
 	const getCurrentOption = computed(() => {
 		// console.log('mainStore.getCurrentOption: ', mainStore.getCurrentOption);
@@ -16,9 +16,15 @@ export default function useMainStore() {
 		return mainStore.getHouseOption;
 	});
 
+	const getShowPlaceholder = computed(() => mainStore.getShowPlaceholder);
+
 	const simpleGameOptions = computed(() => mainStore.getSimpleGameOptions);
 
 	const resultGame = computed(() => {
+		console.log(
+			'mainStore.getGameState.isPlayerWon: ',
+			mainStore.getGameState.isPlayerWon
+		);
 		if (
 			mainStore.getGameState.isGameFinished === true &&
 			mainStore.getGameState.isPlayerWon === true
@@ -44,6 +50,7 @@ export default function useMainStore() {
 		// getCurrentOption: mainStore.getCurrentOption,
 		getCurrentOption,
 		getHouseOption,
+		getShowPlaceholder,
 		simpleGameOptions,
 		resultGame,
 		resetState,

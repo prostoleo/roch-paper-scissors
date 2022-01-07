@@ -88,7 +88,7 @@
 			}
 
 			&::before {
-				opacity: 0.1;
+				opacity: 0.075;
 				z-index: -1;
 
 				transform: scale(1.55);
