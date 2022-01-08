@@ -1,8 +1,12 @@
 <template>
-	<div>BBT</div>
+	<div class="big-bang-theory-layout">
+		<GesturesBonusWrapper></GesturesBonusWrapper>
+	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	import GesturesBonusWrapper from '@/components/gestures/GesturesBonusWrapper.vue';
+</script>
 
 <script>
 	export default {

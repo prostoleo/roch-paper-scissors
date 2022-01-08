@@ -14,9 +14,17 @@
 
 <script setup>
 	import useMainStore from '@/composables/useMainStore';
+	import useBonusStore from '@/composables/useBonusStore';
 	import { computed } from 'vue';
+	import { useRoute } from 'vue-router';
 
-	const { gameStats } = useMainStore();
+	const route = useRoute();
+	useBonusStore;
+	const curStore = computed(() =>
+		route.name === 'Home' ? useMainStore() : useBonusStore()
+	);
+
+	const { gameStats } = curStore.value;
 	// console.log('gameStats: ', gameStats);
 
 	const totalCount = computed(() => gameStats.value.won - gameStats.value.lost);
@@ -34,18 +42,22 @@
 		// width: 100%;
 		// left: 0;
 		// right: 0;
+		max-width: 60rem;
+		width: 90%;
+		margin: 0 auto;
 
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 
-		padding: 1.25em;
+		padding: min(2em, 5%);
 		outline: 2px solid $header-outline;
 		border-radius: 1em;
 
 		h1 {
 			width: min-content;
 			text-transform: uppercase;
+			@include adaptive-value-min-max(font-size, 20, 36);
 
 			line-height: 80%;
 		}
@@ -57,7 +69,7 @@
 
 			gap: 0.5rem;
 
-			padding: 1em;
+			padding: 1em 2em;
 
 			border-radius: 0.5em;
 			background: white;
@@ -71,7 +83,7 @@
 			}
 
 			span.score {
-				font-size: 2.4rem;
+				@include adaptive-value-min-max(font-size, 22, 32);
 				font-weight: 700;
 				text-transform: uppercase;
 

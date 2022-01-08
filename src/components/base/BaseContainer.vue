@@ -10,6 +10,6 @@
 	.container {
 		width: 92%;
 		margin: 0 auto;
-		max-width: 1300px;
+		max-width: $maw-container;
 	}
 </style>

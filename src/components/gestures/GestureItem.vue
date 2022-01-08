@@ -14,8 +14,10 @@
 
 <script setup>
 	// import { defineProps } from 'vue';
-
+	import { useRoute } from 'vue-router';
 	import { useStore } from '@/store/index';
+	import { computed } from 'vue';
+	import useBonusStore from '@/composables/useBonusStore';
 
 	const props = defineProps({
 		data: {
@@ -29,10 +31,17 @@
 		},
 	});
 
+	const route = useRoute();
+
 	const mainStore = useStore();
+	const { bonusStore } = useBonusStore();
+
+	const curStore = computed(() =>
+		route.name === 'Home' ? mainStore : bonusStore
+	);
 
 	function setCurrentOption(id) {
-		mainStore.setCurrentOption(id);
+		curStore.value.setCurrentOption(id);
 	}
 </script>
 
@@ -58,18 +67,26 @@
 		&.scissors {
 			background: $scissors-gradient;
 		}
+		&.lizard {
+			background: $lizard-gradient;
+		}
+		&.spock {
+			background: $spock-gradient;
+		}
 
 		&.initial {
 			cursor: pointer;
 
-			&:last-of-type {
-				grid-column: span 2;
-				// background: cyan;
+			&.simple {
+				&:last-of-type {
+					grid-column: span 2;
+					// background: cyan;
 
-				width: 50%;
-				margin: 0 auto;
+					width: 50%;
+					margin: 0 auto;
 
-				align-self: center;
+					align-self: center;
+				}
 			}
 		}
 
@@ -85,6 +102,8 @@
 				border-radius: 50%;
 
 				background: white;
+
+				animation: fade-in 500ms ease-out 0 1 normal forwards;
 			}
 
 			&::before {
@@ -141,6 +160,16 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
 		}
 	}
 </style>

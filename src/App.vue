@@ -12,7 +12,7 @@
 			</router-view>
 		</main>
 	</BaseContainer>
-	<BaseFooter />
+	<BaseFooter class="footer" />
 </template>
 
 <script setup>
@@ -24,17 +24,18 @@
 
 <style lang="scss">
 	body {
-		background: $bg;
+		background: $bg no-repeat;
 		color: white;
 	}
 
 	#app {
 		min-height: 100vh;
+		// min-height: 50rem;
 		height: 100%;
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 
-		position: relative;
+		// position: relative;
 
 		padding: 2rem 0;
 	}
@@ -43,6 +44,12 @@
 		width: 100%;
 		height: 100%;
 		margin: auto;
+	}
+
+	.footer {
+		padding-bottom: 2em;
+		// position: absolute;
+		// bottom: 0;
 	}
 
 	.route-enter-active {

@@ -1,12 +1,9 @@
 <template>
 	<div class="game--wrapper">
-		<div
-			v-if="getCurrentOption === null"
-			class="gestures gestures--simple-game"
-		>
+		<div v-if="getCurrentOption === null" class="gestures gestures--bonus-game">
 			<GestureItem
-				class="initial simple"
-				v-for="option in simpleGameOptions"
+				class="initial"
+				v-for="option in bonusGameOptions"
 				:key="option.id"
 				:data="option"
 				initial
@@ -58,35 +55,35 @@
 <script setup>
 	import GestureItem from './GestureItem.vue';
 
-	import useMainStore from '@/composables/useMainStore.js';
-	import { computed, onMounted, ref, toRefs, watch, watchEffect } from 'vue';
+	import useBonusStore from '@/composables/useBonusStore.js';
+	import { computed, watch, watchEffect } from 'vue';
 
 	const {
-		mainStore,
+		bonusStore,
 		getCurrentOption,
 		getHouseOption,
 		getShowPlaceholder,
 		// getGameState,
 		resultGame,
-		simpleGameOptions,
+		bonusGameOptions,
 		resetState,
-	} = useMainStore();
+	} = useBonusStore();
 
 	watch(getCurrentOption, (newVal, oldVal) => {
 		// console.log('oldVal: ', oldVal);
 		// console.log('newVal: ', newVal);
-		// console.log('mainStore: ', mainStore);
+		// console.log('bonusStore: ', bonusStore);
 		if (newVal !== null && newVal !== undefined && newVal !== oldVal) {
 			setTimeout(() => {
 				// showPlaceholder.value = false;
-				mainStore.setShowPlaceholder(false);
-			}, mainStore.getTimeoutMs * 1.2);
-			// mainStore.setShowPlaceholder(false);
+				bonusStore.setShowPlaceholder(false);
+			}, bonusStore.getTimeoutMs * 1.2);
+			// bonusStore.setShowPlaceholder(false);
 		}
 	});
 
-	const isPlayerWonComp = computed(() => mainStore.getGameState.isPlayerWon);
-	const isHouseWonComp = computed(() => mainStore.getGameState.isHouseWon);
+	const isPlayerWonComp = computed(() => bonusStore.getGameState.isPlayerWon);
+	const isHouseWonComp = computed(() => bonusStore.getGameState.isHouseWon);
 
 	watchEffect(
 		() => {
@@ -95,7 +92,7 @@
 
 				setTimeout(() => {
 					el.classList.add('winner');
-				}, mainStore.getTimeoutMs * 0.75);
+				}, bonusStore.getTimeoutMs * 0.75);
 			} else if (!getCurrentOption) {
 				const el = document.querySelector('.result__player .result__item');
 
@@ -148,27 +145,27 @@
 	}
 
 	.gestures {
-		--max-width: 29rem;
+		--max-width: 40rem;
 
 		max-width: var(--max-width);
 		margin: 0 auto;
 
-		background: url(/img/bg-triangle.svg);
+		background: url(/img/bg-pentagon.svg);
 		background-repeat: no-repeat;
-		background-size: 70%;
+		background-size: contain;
 		background-position: center center;
 
 		@include mq(med) {
-			--max-width: 50rem;
-			max-width: var(--max-width);
-			background-size: 50%;
-			background-position: 50% 70%;
+			// --max-width: 50rem;
+			// max-width: var(--max-width);
+			// background-size: 50%;
+			// background-position: 50% 70%;
 		}
 
-		&--simple-game {
+		&--bonus-game {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
-			grid-auto-rows: repeat(2, 1fr);
+			grid-template-rows: repeat(3, 1fr);
 
 			justify-items: space-between;
 
@@ -176,6 +173,38 @@
 
 			@include mq(med) {
 				gap: 4rem;
+			}
+
+			.gesture {
+				&:nth-of-type(1) {
+					grid-column: span 2;
+				}
+				&:nth-of-type(2) {
+					position: relative;
+
+					top: -30%;
+					right: -35%;
+
+					grid-column: 2 / 3;
+					grid-row: 2 / 3;
+				}
+				&:nth-of-type(3) {
+					grid-column: 2 / 3;
+					grid-row: 3 / 4;
+				}
+				&:nth-of-type(4) {
+					grid-column: 1 / 2;
+					grid-row: 3 / 4;
+				}
+				&:nth-of-type(5) {
+					position: relative;
+
+					top: -30%;
+					left: -35%;
+
+					grid-column: 1 / 2;
+					grid-row: 2 / 3;
+				}
 			}
 
 			// background: red;

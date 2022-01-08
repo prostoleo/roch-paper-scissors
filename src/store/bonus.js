@@ -4,22 +4,30 @@ import { ref, reactive, toRef, toRefs } from 'vue';
 import getRandomIntegerBetween from '@/helpers/randomIntegerBetween.js';
 // console.log('getRandomIntegerBetween: ', getRandomIntegerBetween);
 
-export const useStore = defineStore('simpleGame', {
+export const useStore = defineStore('bonusGame', {
 	state: () => {
 		// return reactive({
 		return {
-			simpleGameOptions: [
+			bonusGameOptions: [
 				{
-					id: 1,
-					name: 'paper',
-				},
-				{
-					id: 2,
+					id: 3,
 					name: 'scissors',
 				},
 				{
-					id: 3,
+					id: 2,
+					name: 'paper',
+				},
+				{
+					id: 1,
 					name: 'rock',
+				},
+				{
+					id: 4,
+					name: 'lizard',
+				},
+				{
+					id: 5,
+					name: 'spock',
 				},
 			],
 			currentOption: null,
@@ -36,7 +44,7 @@ export const useStore = defineStore('simpleGame', {
 			showPlaceholder: true,
 
 			gameStats: JSON.parse(
-				localStorage.getItem('rock-paper-scissors-simple-GameStats')
+				localStorage.getItem('rock-paper-scissors-bonus-GameStats')
 			) ?? {
 				won: 0,
 				draw: 0,
@@ -46,8 +54,8 @@ export const useStore = defineStore('simpleGame', {
 	},
 
 	getters: {
-		getSimpleGameOptions(state) {
-			return state.simpleGameOptions;
+		getBonusGameOptions(state) {
+			return state.bonusGameOptions;
 		},
 
 		getCurrentOption(state) {
@@ -72,22 +80,22 @@ export const useStore = defineStore('simpleGame', {
 
 		getGameStats(state) {
 			localStorage.setItem(
-				'rock-paper-scissors-simple-GameStats',
+				'rock-paper-scissors-bonus-GameStats',
 				JSON.stringify(state.gameStats)
 			);
 
 			return state.gameStats;
 		},
 
-		getSimpleGameOptionOnId: (state) => {
-			return (id) => state.simpleGameOptions.find((option) => option.id === id);
+		getBonusGameOptionOnId: (state) => {
+			return (id) => state.bonusGameOptions.find((option) => option.id === id);
 		},
 	},
 
 	actions: {
 		setCurrentOption(id) {
 			// console.log('this: ', this);
-			const newCurOption = this.getSimpleGameOptionOnId(id);
+			const newCurOption = this.getBonusGameOptionOnId(id);
 
 			this.currentOption = newCurOption;
 			// console.log('this.currentOption: ', this.currentOption);
@@ -102,7 +110,7 @@ export const useStore = defineStore('simpleGame', {
 			const houseOptionId = getRandomIntegerBetween(1, 3);
 			// console.log('houseOptionId: ', houseOptionId);
 
-			const newHouseOption = this.getSimpleGameOptionOnId(houseOptionId);
+			const newHouseOption = this.getBonusGameOptionOnId(houseOptionId);
 			// console.log('newHouseOption: ', newHouseOption);
 			this.houseOption = newHouseOption;
 
@@ -120,17 +128,32 @@ export const useStore = defineStore('simpleGame', {
 				return;
 			}
 
+			// player === rock
+
 			if (playerOption === 'rock' && houseOption === 'scissors') {
 				this.addWin();
 				return;
 			}
-
+			if (playerOption === 'rock' && houseOption === 'lizard') {
+				this.addWin();
+				return;
+			}
 			if (playerOption === 'rock' && houseOption === 'paper') {
 				this.addLost();
 				return;
 			}
+			if (playerOption === 'rock' && houseOption === 'spock') {
+				this.addLost();
+				return;
+			}
+
+			// player === paper
 
 			if (playerOption === 'paper' && houseOption === 'rock') {
+				this.addWin();
+				return;
+			}
+			if (playerOption === 'paper' && houseOption === 'spock') {
 				this.addWin();
 				return;
 			}
@@ -138,11 +161,61 @@ export const useStore = defineStore('simpleGame', {
 				this.addLost();
 				return;
 			}
+			if (playerOption === 'paper' && houseOption === 'lizard') {
+				this.addLost();
+				return;
+			}
+
+			// player === scissors
 			if (playerOption === 'scissors' && houseOption === 'paper') {
 				this.addWin();
 				return;
 			}
+			if (playerOption === 'scissors' && houseOption === 'lizard') {
+				this.addWin();
+				return;
+			}
 			if (playerOption === 'scissors' && houseOption === 'rock') {
+				this.addLost();
+				return;
+			}
+			if (playerOption === 'scissors' && houseOption === 'spock') {
+				this.addLost();
+				return;
+			}
+
+			// player === lizard
+			if (playerOption === 'lizard' && houseOption === 'spock') {
+				this.addWin();
+				return;
+			}
+			if (playerOption === 'lizard' && houseOption === 'paper') {
+				this.addWin();
+				return;
+			}
+			if (playerOption === 'lizard' && houseOption === 'scissors') {
+				this.addLost();
+				return;
+			}
+			if (playerOption === 'lizard' && houseOption === 'rock') {
+				this.addLost();
+				return;
+			}
+
+			// player === spock
+			if (playerOption === 'spock' && houseOption === 'scissors') {
+				this.addWin();
+				return;
+			}
+			if (playerOption === 'spock' && houseOption === 'rock') {
+				this.addWin();
+				return;
+			}
+			if (playerOption === 'spock' && houseOption === 'lizard') {
+				this.addLost();
+				return;
+			}
+			if (playerOption === 'spock' && houseOption === 'paper') {
 				this.addLost();
 				return;
 			}
