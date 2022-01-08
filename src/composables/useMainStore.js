@@ -3,16 +3,12 @@ import { useStore } from '@/store/index.js';
 
 export default function useMainStore() {
 	const mainStore = useStore();
-	// console.log('mainStore: ', mainStore);
 
 	const getCurrentOption = computed(() => {
-		// console.log('mainStore.getCurrentOption: ', mainStore.getCurrentOption);
-
 		return mainStore.getCurrentOption;
 	});
 
 	const getHouseOption = computed(() => {
-		// console.log('mainStore.getHouseOption: ', mainStore.getHouseOption);
 		return mainStore.getHouseOption;
 	});
 
@@ -21,10 +17,6 @@ export default function useMainStore() {
 	const simpleGameOptions = computed(() => mainStore.getSimpleGameOptions);
 
 	const resultGame = computed(() => {
-		console.log(
-			'mainStore.getGameState.isPlayerWon: ',
-			mainStore.getGameState.isPlayerWon
-		);
 		if (
 			mainStore.getGameState.isGameFinished === true &&
 			mainStore.getGameState.isPlayerWon === true

@@ -14,21 +14,34 @@
 
 <script setup>
 	import useMainStore from '@/composables/useMainStore';
-	import useBonusStore from '@/composables/useBonusStore';
-	import { computed } from 'vue';
+	// import useBonusStore from '@/composables/useBonusStore';
+	import { computed, ref, watchEffect } from 'vue';
 	import { useRoute } from 'vue-router';
+	import { useStore } from '@/store/index.js';
+	import { useBonusStore } from '@/store/bonus.js';
 
+	const mainStore = useStore();
+	const bonusStore = useBonusStore();
 	const route = useRoute();
-	useBonusStore;
-	const curStore = computed(() =>
-		route.name === 'Home' ? useMainStore() : useBonusStore()
-	);
+	const isHome = ref(true);
 
-	const { gameStats } = curStore.value;
-	// console.log('gameStats: ', gameStats);
+	watchEffect(() => {
+		if (route.name === 'Home') {
+			isHome.value = true;
+		}
 
-	const totalCount = computed(() => gameStats.value.won - gameStats.value.lost);
-	// console.log('totalCount: ', totalCount);
+		if (route.name === 'BigBangTheory') {
+			isHome.value = false;
+		}
+	});
+
+	const totalCount = computed(() => {
+		if (isHome.value) {
+			return mainStore.getGameStats.won - mainStore.getGameStats.lost;
+		} else {
+			return bonusStore.getGameStats.won - bonusStore.getGameStats.lost;
+		}
+	});
 </script>
 
 <style lang="scss" scoped>

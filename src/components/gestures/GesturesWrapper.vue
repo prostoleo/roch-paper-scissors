@@ -59,7 +59,7 @@
 	import GestureItem from './GestureItem.vue';
 
 	import useMainStore from '@/composables/useMainStore.js';
-	import { computed, onMounted, ref, toRefs, watch, watchEffect } from 'vue';
+	import { computed, watch, watchEffect } from 'vue';
 
 	const {
 		mainStore,
@@ -73,15 +73,10 @@
 	} = useMainStore();
 
 	watch(getCurrentOption, (newVal, oldVal) => {
-		// console.log('oldVal: ', oldVal);
-		// console.log('newVal: ', newVal);
-		// console.log('mainStore: ', mainStore);
 		if (newVal !== null && newVal !== undefined && newVal !== oldVal) {
 			setTimeout(() => {
-				// showPlaceholder.value = false;
 				mainStore.setShowPlaceholder(false);
 			}, mainStore.getTimeoutMs * 1.2);
-			// mainStore.setShowPlaceholder(false);
 		}
 	});
 

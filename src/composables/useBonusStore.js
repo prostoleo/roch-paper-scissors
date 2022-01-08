@@ -1,18 +1,14 @@
 import { computed } from 'vue';
-import { useStore } from '@/store/bonus.js';
+import { useBonusStore } from '@/store/bonus.js';
 
-export default function useBonusStore() {
-	const bonusStore = useStore();
-	// console.log('bonusStore: ', bonusStore);
+export default function useStore() {
+	const bonusStore = useBonusStore();
 
 	const getCurrentOption = computed(() => {
-		// console.log('bonusStore.getCurrentOption: ', bonusStore.getCurrentOption);
-
 		return bonusStore.getCurrentOption;
 	});
 
 	const getHouseOption = computed(() => {
-		// console.log('bonusStore.getHouseOption: ', bonusStore.getHouseOption);
 		return bonusStore.getHouseOption;
 	});
 
@@ -21,10 +17,6 @@ export default function useBonusStore() {
 	const bonusGameOptions = computed(() => bonusStore.getBonusGameOptions);
 
 	const resultGame = computed(() => {
-		console.log(
-			'bonusStore.getGameState.isPlayerWon: ',
-			bonusStore.getGameState.isPlayerWon
-		);
 		if (
 			bonusStore.getGameState.isGameFinished === true &&
 			bonusStore.getGameState.isPlayerWon === true

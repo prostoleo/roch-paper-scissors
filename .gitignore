@@ -25,3 +25,6 @@ dist-ssr
 
 /design
 /images
+# Local Netlify folder
+.netlify
+README-template.md

@@ -2,9 +2,8 @@ import { defineStore } from 'pinia';
 import { ref, reactive, toRef, toRefs } from 'vue';
 
 import getRandomIntegerBetween from '@/helpers/randomIntegerBetween.js';
-// console.log('getRandomIntegerBetween: ', getRandomIntegerBetween);
 
-export const useStore = defineStore('bonusGame', {
+export const useBonusStore = defineStore('bonusGame', {
 	state: () => {
 		// return reactive({
 		return {
@@ -94,11 +93,9 @@ export const useStore = defineStore('bonusGame', {
 
 	actions: {
 		setCurrentOption(id) {
-			// console.log('this: ', this);
 			const newCurOption = this.getBonusGameOptionOnId(id);
 
 			this.currentOption = newCurOption;
-			// console.log('this.currentOption: ', this.currentOption);
 			this.setHouseOption();
 		},
 
@@ -108,10 +105,8 @@ export const useStore = defineStore('bonusGame', {
 
 		setHouseOption() {
 			const houseOptionId = getRandomIntegerBetween(1, 3);
-			// console.log('houseOptionId: ', houseOptionId);
 
 			const newHouseOption = this.getBonusGameOptionOnId(houseOptionId);
-			// console.log('newHouseOption: ', newHouseOption);
 			this.houseOption = newHouseOption;
 
 			this.checkResult();
@@ -120,8 +115,6 @@ export const useStore = defineStore('bonusGame', {
 		checkResult() {
 			const { name: playerOption, id: playerId } = this.getCurrentOption;
 			const { name: houseOption, id: houseId } = this.getHouseOption;
-
-			// console.log({ playerOption, houseOption });
 
 			if (playerOption === houseOption) {
 				this.addDraw();

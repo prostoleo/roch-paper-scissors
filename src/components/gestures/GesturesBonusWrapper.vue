@@ -70,9 +70,6 @@
 	} = useBonusStore();
 
 	watch(getCurrentOption, (newVal, oldVal) => {
-		// console.log('oldVal: ', oldVal);
-		// console.log('newVal: ', newVal);
-		// console.log('bonusStore: ', bonusStore);
 		if (newVal !== null && newVal !== undefined && newVal !== oldVal) {
 			setTimeout(() => {
 				// showPlaceholder.value = false;
