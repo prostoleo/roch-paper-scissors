@@ -38,6 +38,7 @@
 		// position: relative;
 
 		padding: 2rem 0;
+		overflow-x: hidden;
 	}
 
 	main {

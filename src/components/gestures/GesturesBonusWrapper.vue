@@ -152,13 +152,6 @@
 		background-size: contain;
 		background-position: center center;
 
-		@include mq(med) {
-			// --max-width: 50rem;
-			// max-width: var(--max-width);
-			// background-size: 50%;
-			// background-position: 50% 70%;
-		}
-
 		&--bonus-game {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
@@ -180,10 +173,14 @@
 					position: relative;
 
 					top: -30%;
-					right: -35%;
+					right: -20%;
 
 					grid-column: 2 / 3;
 					grid-row: 2 / 3;
+
+					@include mq(sm) {
+						right: -35%;
+					}
 				}
 				&:nth-of-type(3) {
 					grid-column: 2 / 3;
@@ -197,7 +194,11 @@
 					position: relative;
 
 					top: -30%;
-					left: -35%;
+					left: -20%;
+
+					@include mq(sm) {
+						left: -35%;
+					}
 
 					grid-column: 1 / 2;
 					grid-row: 2 / 3;

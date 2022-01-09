@@ -47,8 +47,11 @@
 
 <style lang="scss" scoped>
 	.gesture {
-		--height: 13.5rem;
 		--width: 13.5rem;
+		--height: 13.5rem;
+
+		// --width: 11.5rem;
+		// --height: 11.5rem;
 
 		background: green;
 
@@ -57,6 +60,11 @@
 		width: 100%;
 		max-width: var(--width);
 		border-radius: 50%;
+
+		@include mq(sm) {
+			--height: 13.5rem;
+			--width: 13.5rem;
+		}
 
 		&.rock {
 			background: $rock-gradient;
